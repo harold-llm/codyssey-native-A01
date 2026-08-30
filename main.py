@@ -85,6 +85,27 @@ def add_prompt():
     print("\n프롬프트가 추가되었습니다!")
 
 
+def show_by_category():
+    """카테고리 선택 → 해당 카테고리 프롬프트만 출력"""
+    print("\n=== 카테고리별 조회 ===")
+    for i, category in enumerate(CATEGORIES, start=1):
+        print(f"{i}) {category}")
+    choice = input("선택: ").strip()
+    if not choice.isdigit() or not 1 <= int(choice) <= len(CATEGORIES):
+        print("존재하지 않는 카테고리입니다.")
+        return
+    category = CATEGORIES[int(choice) - 1]
+    results = [p for p in PROMPTS if p["category"] == category]
+    print(f"\n[{category}] 카테고리 프롬프트:")
+    if not results:
+        print("해당 카테고리에 등록된 프롬프트가 없습니다.")
+        return
+    for i, p in enumerate(results, start=1):
+        star = " ⭐" if p["favorite"] else ""
+        print(f"{i}. {p['title']}{star}")
+    print(f"\n총 {len(results)}개의 프롬프트")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -98,6 +119,8 @@ def main():
             continue
         if choice == "1":
             add_prompt()
+        elif choice == "3":
+            show_by_category()
         else:
             print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
