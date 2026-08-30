@@ -168,6 +168,18 @@ def show_favorites():
     print(f"\n총 {len(results)}개의 즐겨찾기")
 
 
+def show_list():
+    """저장된 모든 프롬프트를 번호와 함께 출력"""
+    print("\n=== 프롬프트 목록 ===")
+    if not PROMPTS:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    for i, p in enumerate(PROMPTS, start=1):
+        star = " ⭐" if p["favorite"] else ""
+        print(f"{i}. [{p['category']}] {p['title']}{star}")
+    print(f"\n총 {len(PROMPTS)}개의 프롬프트")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -181,6 +193,8 @@ def main():
             continue
         if choice == "1":
             add_prompt()
+        elif choice == "2":
+            show_list()
         elif choice == "3":
             show_by_category()
         elif choice == "4":
