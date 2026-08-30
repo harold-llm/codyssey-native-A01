@@ -106,6 +106,24 @@ def show_by_category():
     print(f"\n총 {len(results)}개의 프롬프트")
 
 
+def search_prompt():
+    """키워드 검색 — 제목 또는 내용에 포함된 프롬프트 출력"""
+    print("\n=== 프롬프트 검색 ===")
+    keyword = input("검색어: ").strip()
+    if not keyword:
+        print("검색어를 입력해 주세요.")
+        return
+    results = [p for p in PROMPTS if keyword in p["title"] or keyword in p["content"]]
+    print("\n검색 결과:")
+    if not results:
+        print(f"'{keyword}'에 해당하는 프롬프트가 없습니다.")
+        return
+    for i, p in enumerate(results, start=1):
+        star = " ⭐" if p["favorite"] else ""
+        print(f"{i}. [{p['category']}] {p['title']}{star}")
+    print(f"\n{len(results)}개의 프롬프트를 찾았습니다.")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -121,6 +139,8 @@ def main():
             add_prompt()
         elif choice == "3":
             show_by_category()
+        elif choice == "4":
+            search_prompt()
         else:
             print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
