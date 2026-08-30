@@ -51,6 +51,40 @@ def show_menu():
     print("0. 종료")
 
 
+def add_prompt():
+    """새 프롬프트 추가 — 제목·내용·카테고리 입력, 빈 입력 시 재입력 요청"""
+    print("\n=== 프롬프트 추가 ===")
+    title = input("제목: ").strip()
+    while not title:
+        print("제목은 비워둘 수 없습니다.")
+        title = input("제목: ").strip()
+    content = input("내용: ").strip()
+    while not content:
+        print("내용은 비워둘 수 없습니다.")
+        content = input("내용: ").strip()
+
+    print("\n카테고리 선택:")
+    for i, category in enumerate(CATEGORIES, start=1):
+        print(f"{i}) {category}")
+    print(f"{len(CATEGORIES) + 1}) 직접 입력")
+    choice = input("선택: ").strip()
+    if choice.isdigit() and 1 <= int(choice) <= len(CATEGORIES):
+        category = CATEGORIES[int(choice) - 1]
+    elif choice.isdigit() and int(choice) == len(CATEGORIES) + 1:
+        category = input("새 카테고리: ").strip() or "기타"
+    else:
+        print("카테고리를 선택하지 않아 '기타'로 등록합니다.")
+        category = "기타"
+
+    PROMPTS.append({
+        "title": title,
+        "content": content,
+        "category": category,
+        "favorite": False,
+    })
+    print("\n프롬프트가 추가되었습니다!")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -62,7 +96,10 @@ def main():
         if choice not in {"1", "2", "3", "4", "5", "6", "7"}:
             print("1~7 또는 0을 입력해 주세요.")
             continue
-        print("이 기능은 아직 개발 중입니다.")
+        if choice == "1":
+            add_prompt()
+        else:
+            print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
 
 
