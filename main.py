@@ -143,6 +143,19 @@ def show_detail():
     print(line)
 
 
+def toggle_favorite():
+    """번호 입력 → 즐겨찾기 추가/해제"""
+    print("\n=== 즐겨찾기 관리 ===")
+    number = input("프롬프트 번호 입력: ").strip()
+    if not number.isdigit() or not 1 <= int(number) <= len(PROMPTS):
+        print("존재하지 않는 번호입니다.")
+        return
+    prompt = PROMPTS[int(number) - 1]
+    prompt["favorite"] = not prompt["favorite"]
+    action = "추가" if prompt["favorite"] else "해제"
+    print(f"'{prompt['title']}' 프롬프트를 즐겨찾기에 {action}했습니다!")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -162,6 +175,8 @@ def main():
             search_prompt()
         elif choice == "5":
             show_detail()
+        elif choice == "6":
+            toggle_favorite()
         else:
             print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
