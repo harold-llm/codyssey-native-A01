@@ -156,6 +156,18 @@ def toggle_favorite():
     print(f"'{prompt['title']}' 프롬프트를 즐겨찾기에 {action}했습니다!")
 
 
+def show_favorites():
+    """즐겨찾기된 프롬프트만 모아서 표시"""
+    print("\n=== 즐겨찾기 목록 ===")
+    results = [p for p in PROMPTS if p["favorite"]]
+    if not results:
+        print("즐겨찾기한 프롬프트가 없습니다.")
+        return
+    for i, p in enumerate(results, start=1):
+        print(f"{i}. [{p['category']}] {p['title']} ⭐")
+    print(f"\n총 {len(results)}개의 즐겨찾기")
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -177,6 +189,8 @@ def main():
             show_detail()
         elif choice == "6":
             toggle_favorite()
+        elif choice == "7":
+            show_favorites()
         else:
             print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
