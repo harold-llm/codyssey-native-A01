@@ -124,6 +124,25 @@ def search_prompt():
     print(f"\n{len(results)}개의 프롬프트를 찾았습니다.")
 
 
+def show_detail():
+    """번호 입력 → 해당 프롬프트 전체 내용 표시"""
+    print("\n=== 프롬프트 상세 보기 ===")
+    number = input("번호 입력: ").strip()
+    if not number.isdigit() or not 1 <= int(number) <= len(PROMPTS):
+        print("존재하지 않는 번호입니다.")
+        return
+    prompt = PROMPTS[int(number) - 1]
+    line = "\u2500" * 28
+    print(f"\n{line}")
+    print(f"제목: {prompt['title']}")
+    print(f"카테고리: {prompt['category']}")
+    print(f"즐겨찾기: {'⭐' if prompt['favorite'] else '아니요'}")
+    print(line)
+    print("내용:")
+    print(prompt["content"])
+    print(line)
+
+
 def main():
     """메인 루프 — 메뉴를 반복 표시하고 선택에 따라 기능을 실행"""
     while True:
@@ -141,6 +160,8 @@ def main():
             show_by_category()
         elif choice == "4":
             search_prompt()
+        elif choice == "5":
+            show_detail()
         else:
             print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
