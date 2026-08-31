@@ -205,8 +205,6 @@ def main():
             toggle_favorite()
         elif choice == "7":
             show_favorites()
-        else:
-            print("이 기능은 아직 개발 중입니다.")
         input("\n메뉴로 돌아가려면 Enter를 누르세요")
 
 
